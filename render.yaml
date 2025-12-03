@@ -1,8 +1,11 @@
-{
-  "build": {
-    "command": "pip install -r requirements.txt"
-  },
-  "deploy": {
-    "command": "uvicorn api:app --host 0.0.0.0 --port $PORT"
-  }
-}
+services:
+  - type: web
+    name: smoke-detection-app
+    env: docker
+    dockerfilePath: Dockerfile.combined
+    branch: main
+    envVars:
+      - key: LOG_LEVEL
+        value: INFO
+      - key: SAMPLE_EVERY
+        value: 5

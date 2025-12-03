@@ -60,14 +60,24 @@ docker build -t smoke-ui -f Dockerfile.streamlit .
 
 ## 🌐 Despliegue
 
-### Render
+### Render (Recomendado - Todo en Uno)
 
-1. Conecta tu repositorio de GitHub
+**Opción Simple**: Un solo servicio con API + Interfaz
+
+1. Conecta tu repositorio de GitHub a Render
 2. Selecciona "Web Service"
-3. Configuración automática con Dockerfile
-4. Variables de entorno opcionales:
-   - `LOG_LEVEL`: INFO (por defecto)
-   - `SAMPLE_EVERY`: 5 (frames)
+3. Configuración:
+   - **Runtime**: Docker
+   - **Dockerfile Path**: `Dockerfile.combined`
+   - **Root Directory**: *(dejar vacío)*
+
+📖 **Guía completa**: Ver [DEPLOY_SIMPLE.md](DEPLOY_SIMPLE.md)
+
+### Render (Servicios Separados)
+
+**Opción Avanzada**: API y Frontend en servicios separados
+
+📖 **Guía completa**: Ver [DEPLOY_RENDER.md](DEPLOY_RENDER.md)
 
 ## 📄 Licencia
 
