@@ -1,0 +1,23 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copiar archivo principal
+COPY app_streamlit.py .
+
+# Copiar requirements
+COPY requirements_streamlit.txt ./requirements.txt
+
+# Copiar config de Streamlit (la clave para quitar límites)
+COPY .streamlit /app/.streamlit
+
+# Instalar dependencias
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Backend apuntando al contenedor de la API
+ENV API_BASE=http://smoke-api:8000
+
+EXPOSE 8501
+
+# Run streamlit
+CMD ["streamlit", "run", "app_streamlit.py", "--server.port=8501", "--server.address=0.0.0.0"]
