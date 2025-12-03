@@ -35,11 +35,16 @@ video_info: Dict[str, dict] = {}
 
 ROOT = Path(__file__).resolve().parent
 
-BASE_DIR = Path("/home/tyevenes/workspace/rest_api/fastapi")
+# Usar rutas relativas para compatibilidad con Render y otros servicios
+BASE_DIR = ROOT / "fastapi"
 VIDEO_DIR = BASE_DIR / "videos"
 SENSOR_DIR = BASE_DIR / "sensors"
-DEFAULT_JSON_DIR = Path.home() / "workspace/rest_api/json"
-JSON_OUTPUT_DIR = Path(os.getenv("JSON_OUTPUT_DIR", str(DEFAULT_JSON_DIR))).resolve()
+JSON_OUTPUT_DIR = ROOT / "json"
+
+# Permitir override por variable de entorno
+if json_dir_env := os.getenv("JSON_OUTPUT_DIR"):
+    JSON_OUTPUT_DIR = Path(json_dir_env).resolve()
+
 for p in (VIDEO_DIR, SENSOR_DIR, JSON_OUTPUT_DIR):
     p.mkdir(parents=True, exist_ok=True)
 
