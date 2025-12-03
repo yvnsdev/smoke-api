@@ -35,7 +35,7 @@ ENV LOG_LEVEL=INFO \
     API_BASE=http://localhost:8000
 
 # Crear directorios necesarios
-RUN mkdir -p /app/fastapi/videos /app/fastapi/sensors /app/json
+RUN mkdir -p /app/fastapi/videos /app/fastapi/sensors /app/json /var/log/supervisor
 
 # Copiar configuración de supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
