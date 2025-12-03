@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsm6 \
     libxext6 \
     libgl1 \
-    supervisor \
  && rm -rf /var/lib/apt/lists/*
 
 # Directorio de trabajo
@@ -32,13 +31,14 @@ ENV LOG_LEVEL=INFO \
     API_BASE=http://localhost:8000
 
 # Crear directorios necesarios
-RUN mkdir -p /app/fastapi/videos /app/fastapi/sensors /app/json /var/log/supervisor
+RUN mkdir -p /app/fastapi/videos /app/fastapi/sensors /app/json
 
-# Copiar configuración de supervisor
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Copiar script de inicio
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
-# Exponer puertos (Render usa PORT para el servicio principal)
-EXPOSE 8501
+# Exponer puertos
+EXPOSE 8501 8000
 
-# Arrancar supervisor que gestiona API y Streamlit
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# Arrancar ambos servicios
+CMD ["/app/start.sh"]
